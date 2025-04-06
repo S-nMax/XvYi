@@ -1,0 +1,222 @@
+-- 创建通知
+game:GetService("StarterGui"):SetCore("SendNotification",{
+    Title = "绪一脚本中心",
+    Text = "加载完成",
+    Duration = 2.5
+})
+
+-- 主UI
+local main = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local MinimizedFrame = Instance.new("Frame")
+
+-- 主窗口组件
+local TitleBar = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local MinimizeBtn = Instance.new("TextButton")
+local CloseBtn = Instance.new("TextButton")
+
+-- 选项按钮
+local option1 = Instance.new("TextButton")
+local option2 = Instance.new("TextButton")
+local option3 = Instance.new("TextButton")
+
+-- 最小化窗口组件
+local MaximizeBtn = Instance.new("TextButton")
+local MinimizedCloseBtn = Instance.new("TextButton")
+local MinimizedLabel = Instance.new("TextLabel")
+
+-- UI属性设置
+main.Name = "TechFlightUI"
+main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- 主窗口框架
+MainFrame.Size = UDim2.new(0, 250, 0, 180)
+MainFrame.Position = UDim2.new(0.1, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = main
+
+-- 圆角效果
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.Parent = MainFrame
+
+-- 标题栏
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+TitleBar.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+TitleBar.Parent = MainFrame
+
+-- 标题
+TitleLabel.Size = UDim2.new(0.6, 0, 1, 0)
+TitleLabel.Position = UDim2.new(0.05, 0, 0, 0)
+TitleLabel.Text = "绪一"
+TitleLabel.TextColor3 = Color3.fromRGB(100, 200, 255)
+TitleLabel.Font = Enum.Font.SciFi
+TitleLabel.TextSize = 16
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Parent = TitleBar
+
+-- 最小化按钮
+MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+MinimizeBtn.Position = UDim2.new(0.7, 0, 0, 0)
+MinimizeBtn.Text = "─"
+MinimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+MinimizeBtn.Font = Enum.Font.SciFi
+MinimizeBtn.Parent = TitleBar
+
+-- 关闭按钮
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(0.85, 0, 0, 0)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+CloseBtn.Font = Enum.Font.SciFi
+CloseBtn.Parent = TitleBar
+
+-- 选项1按钮
+option1.Name = "Option1"
+option1.Size = UDim2.new(0.9, 0, 0.2, 0)
+option1.Position = UDim2.new(0.05, 0, 0.25, 0)
+option1.Text = "1. 绪一飞行"
+option1.TextColor3 = Color3.fromRGB(200, 230, 255)
+option1.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+option1.Font = Enum.Font.SciFi
+option1.TextSize = 14
+option1.Parent = MainFrame
+
+-- 选项2按钮
+option2.Name = "Option2"
+option2.Size = UDim2.new(0.9, 0, 0.2, 0)
+option2.Position = UDim2.new(0.05, 0, 0.5, 0)
+option2.Text = "2. 阿尔宙斯飞行"
+option2.TextColor3 = Color3.fromRGB(200, 230, 255)
+option2.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+option2.Font = Enum.Font.SciFi
+option2.TextSize = 14
+option2.Parent = MainFrame
+
+-- 选项3按钮
+option3.Name = "Option3"
+option3.Size = UDim2.new(0.9, 0, 0.2, 0)
+option3.Position = UDim2.new(0.05, 0, 0.75, 0)
+option3.Text = "3. 绪一改动画包"
+option3.TextColor3 = Color3.fromRGB(200, 230, 255)
+option3.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+option3.Font = Enum.Font.SciFi
+option3.TextSize = 14
+option3.Parent = MainFrame
+
+-- 按钮圆角
+local buttonCorner = Instance.new("UICorner")
+buttonCorner.CornerRadius = UDim.new(0, 6)
+buttonCorner.Parent = option1
+buttonCorner:Clone().Parent = option2
+buttonCorner:Clone().Parent = option3
+
+-- 最小化窗口框架
+MinimizedFrame.Size = UDim2.new(0, 150, 0, 40)
+MinimizedFrame.Position = UDim2.new(0.1, 0, 0.3, 0)
+MinimizedFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+MinimizedFrame.BorderSizePixel = 0
+MinimizedFrame.Active = true
+MinimizedFrame.Draggable = true
+MinimizedFrame.Visible = false
+MinimizedFrame.Parent = main
+
+-- 最小化窗口圆角
+local MinimizedCorner = Instance.new("UICorner")
+MinimizedCorner.CornerRadius = UDim.new(0, 8)
+MinimizedCorner.Parent = MinimizedFrame
+
+-- 最小化窗口标题
+MinimizedLabel.Size = UDim2.new(0.6, 0, 1, 0)
+MinimizedLabel.Position = UDim2.new(0.05, 0, 0, 0)
+MinimizedLabel.Text = "飞行工具"
+MinimizedLabel.TextColor3 = Color3.fromRGB(100, 200, 255)
+MinimizedLabel.Font = Enum.Font.SciFi
+MinimizedLabel.TextSize = 14
+MinimizedLabel.BackgroundTransparency = 1
+MinimizedLabel.Parent = MinimizedFrame
+
+-- 最大化按钮
+MaximizeBtn.Size = UDim2.new(0, 30, 0, 30)
+MaximizeBtn.Position = UDim2.new(0.7, 0, 0, 0)
+MaximizeBtn.Text = "□"
+MaximizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MaximizeBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+MaximizeBtn.Font = Enum.Font.SciFi
+MaximizeBtn.Parent = MinimizedFrame
+
+-- 最小化窗口关闭按钮
+MinimizedCloseBtn.Size = UDim2.new(0, 30, 0, 30)
+MinimizedCloseBtn.Position = UDim2.new(0.85, 0, 0, 0)
+MinimizedCloseBtn.Text = "×"
+MinimizedCloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+MinimizedCloseBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+MinimizedCloseBtn.Font = Enum.Font.SciFi
+MinimizedCloseBtn.Parent = MinimizedFrame
+
+-- 按钮悬停效果
+local function setupButtonHover(button)
+    button.MouseEnter:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(70, 80, 100)
+    end)
+    
+    button.MouseLeave:Connect(function()
+        button.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    end)
+end
+
+setupButtonHover(option1)
+setupButtonHover(option2)
+setupButtonHover(option3)
+setupButtonHover(MinimizeBtn)
+setupButtonHover(CloseBtn)
+setupButtonHover(MaximizeBtn)
+setupButtonHover(MinimizedCloseBtn)
+
+-- 角色重生处理
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
+    wait(0.7)
+    game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+    game.Players.LocalPlayer.Character.Animate.Disabled = false
+end)
+
+-- 最小化功能
+MinimizeBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    MinimizedFrame.Visible = true
+end)
+
+-- 最大化功能
+MaximizeBtn.MouseButton1Click:Connect(function()
+    MinimizedFrame.Visible = false
+    MainFrame.Visible = true
+end)
+
+-- 关闭功能
+CloseBtn.MouseButton1Click:Connect(function()
+    main:Destroy()
+end)
+
+MinimizedCloseBtn.MouseButton1Click:Connect(function()
+    main:Destroy()
+end)
+
+-- 选项功能
+option1.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/S-nMax/XvYi/refs/heads/main/XvYiFly'))()
+end)
+
+option2.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/S-nMax/XvYi/refs/heads/main/ArceusXFlyCn'))()
+end)
+
+option3.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/S-nMax/XvYi/refs/heads/main/XvYiSport'))()
+end)

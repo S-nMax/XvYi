@@ -1,21 +1,40 @@
--- 主通知
 game:GetService("StarterGui"):SetCore("SendNotification",{
-    Title = "绪一",
-    Text = "作者: 快看万叶 & WarriorRoberr",
+    Title = "飞行脚本",
+    Text ="作者: 快看万叶",
     Duration = 2.5;
 })
 
 -- 主UI
 local main = Instance.new("ScreenGui")
-main.Name = "MultiToolGUI"
+local MainFrame = Instance.new("Frame")
+local MinimizedFrame = Instance.new("Frame")
+
+-- 主窗口组件
+local TitleBar = Instance.new("Frame")
+local TitleLabel = Instance.new("TextLabel")
+local MinimizeBtn = Instance.new("TextButton")
+local CloseBtn = Instance.new("TextButton")
+local up = Instance.new("TextButton")
+local down = Instance.new("TextButton")
+local onof = Instance.new("TextButton")
+local plus = Instance.new("TextButton")
+local speed = Instance.new("TextLabel")
+local mine = Instance.new("TextButton")
+
+-- 最小化窗口组件
+local MinimizedFlyBtn = Instance.new("TextButton")
+local MaximizeBtn = Instance.new("TextButton")
+local MinimizedCloseBtn = Instance.new("TextButton")
+
+-- UI属性设置
+main.Name = "FlightGUI"
 main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
--- 主窗口
-local MainFrame = Instance.new("Frame")
-MainFrame.Size = UDim2.new(0, 200, 0, 250)
+-- 主窗口框架
+MainFrame.Size = UDim2.new(0, 220, 0, 120)
 MainFrame.Position = UDim2.new(0.1, 0, 0.3, 0)
-MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+MainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
 MainFrame.Draggable = true
@@ -27,23 +46,29 @@ MainCorner.CornerRadius = UDim.new(0, 8)
 MainCorner.Parent = MainFrame
 
 -- 标题栏
-local TitleBar = Instance.new("Frame")
 TitleBar.Size = UDim2.new(1, 0, 0, 30)
-TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 TitleBar.Parent = MainFrame
 
-local TitleLabel = Instance.new("TextLabel")
+-- 标题
 TitleLabel.Size = UDim2.new(0.6, 0, 1, 0)
 TitleLabel.Position = UDim2.new(0.05, 0, 0, 0)
-TitleLabel.Text = "绪一-Mian"
+TitleLabel.Text = "飞行控制 v1.0"
 TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
 TitleLabel.Font = Enum.Font.SourceSansBold
 TitleLabel.TextSize = 16
 TitleLabel.BackgroundTransparency = 1
 TitleLabel.Parent = TitleBar
 
+-- 最小化按钮
+MinimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+MinimizeBtn.Position = UDim2.new(0.7, 0, 0, 0)
+MinimizeBtn.Text = "─"
+MinimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+MinimizeBtn.Parent = TitleBar
+
 -- 关闭按钮
-local CloseBtn = Instance.new("TextButton")
 CloseBtn.Size = UDim2.new(0, 30, 0, 30)
 CloseBtn.Position = UDim2.new(0.85, 0, 0, 0)
 CloseBtn.Text = "×"
@@ -51,217 +76,105 @@ CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
 CloseBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
 CloseBtn.Parent = TitleBar
 
--- 功能列表
-local FunctionList = Instance.new("ScrollingFrame")
-FunctionList.Name = "FunctionList"
-FunctionList.Size = UDim2.new(1, 0, 1, -30)
-FunctionList.Position = UDim2.new(0, 0, 0, 30)
-FunctionList.BackgroundTransparency = 1
-FunctionList.CanvasSize = UDim2.new(0, 0, 0, 200)
-FunctionList.ScrollBarThickness = 5
-FunctionList.Parent = MainFrame
-
--- 返回按钮 (初始隐藏)
-local BackButton = Instance.new("TextButton")
-BackButton.Name = "BackButton"
-BackButton.Size = UDim2.new(0, 60, 0, 30)
-BackButton.Position = UDim2.new(0.05, 0, 0, 35)
-BackButton.Text = "返回"
-BackButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-BackButton.Font = Enum.Font.SourceSansBold
-BackButton.TextSize = 16
-BackButton.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
-BackButton.Visible = false
-BackButton.Parent = MainFrame
-
--- 飞行功能按钮
-local FlyButton = Instance.new("TextButton")
-FlyButton.Name = "FlyButton"
-FlyButton.Size = UDim2.new(0.9, 0, 0, 40)
-FlyButton.Position = UDim2.new(0.05, 0, 0, 10)
-FlyButton.Text = "飞行功能"
-FlyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-FlyButton.Font = Enum.Font.SourceSansBold
-FlyButton.TextSize = 16
-FlyButton.BackgroundColor3 = Color3.fromRGB(70, 70, 100)
-FlyButton.Parent = FunctionList
-
--- 范围调整按钮
-local HitboxButton = Instance.new("TextButton")
-HitboxButton.Name = "HitboxButton"
-HitboxButton.Size = UDim2.new(0.9, 0, 0, 40)
-HitboxButton.Position = UDim2.new(0.05, 0, 0, 60)
-HitboxButton.Text = "范围调整"
-HitboxButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-HitboxButton.Font = Enum.Font.SourceSansBold
-HitboxButton.TextSize = 16
-HitboxButton.BackgroundColor3 = Color3.fromRGB(70, 70, 100)
-HitboxButton.Parent = FunctionList
-
--- 飞行功能UI (初始隐藏)
-local FlyUI = Instance.new("Frame")
-FlyUI.Name = "FlyUI"
-FlyUI.Size = UDim2.new(1, 0, 1, -30)
-FlyUI.Position = UDim2.new(0, 0, 0, 30)
-FlyUI.BackgroundTransparency = 1
-FlyUI.Visible = false
-FlyUI.Parent = MainFrame
-
-local up = Instance.new("TextButton")
-up.Size = UDim2.new(0, 80, 0, 30)
-up.Position = UDim2.new(0.1, 0, 0.1, 0)
+-- 上升按钮
+up.Size = UDim2.new(0, 50, 0, 30)
+up.Position = UDim2.new(0.05, 0, 0.35, 0)
 up.Text = "上升"
 up.TextColor3 = Color3.fromRGB(255, 255, 255)
 up.Font = Enum.Font.SourceSansBold
 up.TextSize = 16
 up.BackgroundColor3 = Color3.fromRGB(80, 180, 80)
-up.Parent = FlyUI
+up.Parent = MainFrame
 
-local down = Instance.new("TextButton")
-down.Size = UDim2.new(0, 80, 0, 30)
-down.Position = UDim2.new(0.1, 0, 0.3, 0)
+-- 下降按钮
+down.Size = UDim2.new(0, 50, 0, 30)
+down.Position = UDim2.new(0.05, 0, 0.7, 0)
 down.Text = "下降"
 down.TextColor3 = Color3.fromRGB(255, 255, 255)
 down.Font = Enum.Font.SourceSansBold
 down.TextSize = 16
 down.BackgroundColor3 = Color3.fromRGB(180, 80, 80)
-down.Parent = FlyUI
+down.Parent = MainFrame
 
-local plus = Instance.new("TextButton")
-plus.Size = UDim2.new(0, 80, 0, 30)
-plus.Position = UDim2.new(0.1, 0, 0.5, 0)
+-- 加速按钮
+plus.Size = UDim2.new(0, 50, 0, 30)
+plus.Position = UDim2.new(0.3, 0, 0.35, 0)
 plus.Text = "加速 +1"
 plus.TextColor3 = Color3.fromRGB(255, 255, 255)
 plus.Font = Enum.Font.SourceSansBold
 plus.TextSize = 14
 plus.BackgroundColor3 = Color3.fromRGB(70, 70, 120)
-plus.Parent = FlyUI
+plus.Parent = MainFrame
 
-local mine = Instance.new("TextButton")
-mine.Size = UDim2.new(0, 80, 0, 30)
-mine.Position = UDim2.new(0.1, 0, 0.7, 0)
+-- 减速按钮
+mine.Size = UDim2.new(0, 50, 0, 30)
+mine.Position = UDim2.new(0.3, 0, 0.7, 0)
 mine.Text = "减速 -1"
 mine.TextColor3 = Color3.fromRGB(255, 255, 255)
 mine.Font = Enum.Font.SourceSansBold
 mine.TextSize = 14
 mine.BackgroundColor3 = Color3.fromRGB(70, 70, 120)
-mine.Parent = FlyUI
+mine.Parent = MainFrame
 
-local speed = Instance.new("TextLabel")
+-- 速度显示
 speed.Size = UDim2.new(0, 40, 0, 30)
-speed.Position = UDim2.new(0.6, 0, 0.5, 0)
+speed.Position = UDim2.new(0.55, 0, 0.35, 0)
 speed.Text = "1"
 speed.TextColor3 = Color3.fromRGB(255, 255, 255)
 speed.Font = Enum.Font.SourceSansBold
 speed.TextSize = 16
 speed.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-speed.Parent = FlyUI
+speed.Parent = MainFrame
 
-local onof = Instance.new("TextButton")
-onof.Size = UDim2.new(0, 120, 0, 30)
-onof.Position = UDim2.new(0.1, 0, 0.9, 0)
+-- 飞行开关
+onof.Size = UDim2.new(0, 80, 0, 30)
+onof.Position = UDim2.new(0.55, 0, 0.7, 0)
 onof.Text = "飞行:关闭"
 onof.TextColor3 = Color3.fromRGB(255, 255, 255)
 onof.Font = Enum.Font.SourceSansBold
 onof.TextSize = 16
 onof.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
-onof.Parent = FlyUI
+onof.Parent = MainFrame
 
--- 范围调整UI (初始隐藏)
-local HitboxUI = Instance.new("Frame")
-HitboxUI.Name = "HitboxUI"
-HitboxUI.Size = UDim2.new(1, 0, 1, -30)
-HitboxUI.Position = UDim2.new(0, 0, 0, 30)
-HitboxUI.BackgroundTransparency = 1
-HitboxUI.Visible = false
-HitboxUI.Parent = MainFrame
+-- 最小化窗口
+MinimizedFrame.Size = UDim2.new(0, 100, 0, 40)
+MinimizedFrame.Position = MainFrame.Position
+MinimizedFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+MinimizedFrame.BorderSizePixel = 0
+MinimizedFrame.Visible = false
+MinimizedFrame.Active = true
+MinimizedFrame.Draggable = true
+MinimizedFrame.Parent = main
 
-local HitBox = Instance.new("TextBox")
-HitBox.Name = "HitBox"
-HitBox.Size = UDim2.new(0, 100, 0, 30)
-HitBox.Position = UDim2.new(0.05, 0, 0.1, 0)
-HitBox.Text = "5"
-HitBox.PlaceholderText = "范围大小"
-HitBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-HitBox.Font = Enum.Font.SourceSansBold
-HitBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HitBox.TextSize = 14
-HitBox.Parent = HitboxUI
+local MinimizedCorner = Instance.new("UICorner")
+MinimizedCorner.CornerRadius = UDim.new(0, 8)
+MinimizedCorner.Parent = MinimizedFrame
 
-local Red = Instance.new("TextBox")
-Red.Name = "Red"
-Red.Size = UDim2.new(0, 60, 0, 25)
-Red.Position = UDim2.new(0.05, 0, 0.3, 0)
-Red.Text = "255"
-Red.PlaceholderText = "R"
-Red.TextColor3 = Color3.fromRGB(0, 0, 0)
-Red.Font = Enum.Font.SourceSansBold
-Red.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-Red.TextSize = 14
-Red.Parent = HitboxUI
+-- 最小化飞行按钮
+MinimizedFlyBtn.Size = UDim2.new(0, 60, 0, 30)
+MinimizedFlyBtn.Position = UDim2.new(0.1, 0, 0.1, 0)
+MinimizedFlyBtn.Text = "飞行"
+MinimizedFlyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizedFlyBtn.Font = Enum.Font.SourceSansBold
+MinimizedFlyBtn.TextSize = 14
+MinimizedFlyBtn.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+MinimizedFlyBtn.Parent = MinimizedFrame
 
-local Green = Instance.new("TextBox")
-Green.Name = "Green"
-Green.Size = UDim2.new(0, 60, 0, 25)
-Green.Position = UDim2.new(0.05, 0, 0.5, 0)
-Green.Text = "0"
-Green.PlaceholderText = "G"
-Green.TextColor3 = Color3.fromRGB(0, 0, 0)
-Green.Font = Enum.Font.SourceSansBold
-Green.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
-Green.TextSize = 14
-Green.Parent = HitboxUI
+-- 最小化放大按钮
+MaximizeBtn.Size = UDim2.new(0, 20, 0, 20)
+MaximizeBtn.Position = UDim2.new(0.7, 0, 0.1, 0)
+MaximizeBtn.Text = "+"
+MaximizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MaximizeBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+MaximizeBtn.Parent = MinimizedFrame
 
-local Blue = Instance.new("TextBox")
-Blue.Name = "Blue"
-Blue.Size = UDim2.new(0, 60, 0, 25)
-Blue.Position = UDim2.new(0.05, 0, 0.7, 0)
-Blue.Text = "0"
-Blue.PlaceholderText = "B"
-Blue.TextColor3 = Color3.fromRGB(0, 0, 0)
-Blue.Font = Enum.Font.SourceSansBold
-Blue.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
-Blue.TextSize = 14
-Blue.Parent = HitboxUI
-
-local ApplyBtn = Instance.new("TextButton")
-ApplyBtn.Size = UDim2.new(0, 120, 0, 30)
-ApplyBtn.Position = UDim2.new(0.05, 0, 0.9, 0)
-ApplyBtn.Text = "应用设置"
-ApplyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-ApplyBtn.Font = Enum.Font.SourceSansBold
-ApplyBtn.TextSize = 16
-ApplyBtn.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
-ApplyBtn.Parent = HitboxUI
-
--- 关闭功能
-CloseBtn.MouseButton1Click:Connect(function()
-    main:Destroy()
-end)
-
--- 返回功能列表
-local function ShowFunctionList()
-    FlyUI.Visible = false
-    HitboxUI.Visible = false
-    FunctionList.Visible = true
-    BackButton.Visible = false
-end
-
-BackButton.MouseButton1Click:Connect(ShowFunctionList)
-
--- 飞行按钮点击
-FlyButton.MouseButton1Click:Connect(function()
-    FunctionList.Visible = false
-    FlyUI.Visible = true
-    BackButton.Visible = true
-end)
-
--- 范围调整按钮点击
-HitboxButton.MouseButton1Click:Connect(function()
-    FunctionList.Visible = false
-    HitboxUI.Visible = true
-    BackButton.Visible = true
-end)
+-- 最小化关闭按钮
+MinimizedCloseBtn.Size = UDim2.new(0, 20, 0, 20)
+MinimizedCloseBtn.Position = UDim2.new(0.9, 0, 0.1, 0)
+MinimizedCloseBtn.Text = "×"
+MinimizedCloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+MinimizedCloseBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+MinimizedCloseBtn.Parent = MinimizedFrame
 
 -- 飞行功能变量
 speeds = 1
@@ -275,6 +188,7 @@ local function ToggleFlight()
     if nowe == true then
         nowe = false
         onof.Text = "飞行:关闭"
+        MinimizedFlyBtn.Text = "飞行"
         
         speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
         speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,true)
@@ -295,6 +209,7 @@ local function ToggleFlight()
     else 
         nowe = true
         onof.Text = "飞行:开启"
+        MinimizedFlyBtn.Text = "飞行:开"
         
         for i = 1, speeds do
             spawn(function()
@@ -337,7 +252,7 @@ local function ToggleFlight()
     end
     
     local plr = game.Players.LocalPlayer
-    local UpperTorso = plr.Character:FindFirstChild("HumanoidRootPart") or plr.Character:FindFirstChild("UpperTorso") or plr.Character:FindFirstChild("Torso")
+    local UpperTorso = plr.Character.LowerTorso
     local flying = true
     local deb = true
     local ctrl = {f = 0, b = 0, l = 0, r = 0}
@@ -394,6 +309,11 @@ end
 
 -- 主飞行按钮点击事件
 onof.MouseButton1Down:Connect(ToggleFlight)
+
+-- 最小化飞行按钮点击事件 - 直接调用主飞行按钮功能
+MinimizedFlyBtn.MouseButton1Click:Connect(function()
+    ToggleFlight()
+end)
 
 -- 上升功能
 up.MouseButton1Down:connect(function()
@@ -462,28 +382,23 @@ mine.MouseButton1Down:connect(function()
     end
 end)
 
--- 范围调整功能
-ApplyBtn.MouseButton1Click:Connect(function()
-    local hitboxSize = tonumber(HitBox.Text) or 5
-    local red = tonumber(Red.Text) or 255
-    local green = tonumber(Green.Text) or 0
-    local blue = tonumber(Blue.Text) or 0
-    
-    game:GetService('RunService').RenderStepped:connect(function()
-        for i,v in next, game:GetService('Players'):GetPlayers() do
-            if v.Name ~= game:GetService('Players').LocalPlayer.Name and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
-                v.Character.HumanoidRootPart.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
-                v.Character.HumanoidRootPart.Transparency = 0.8
-                v.Character.HumanoidRootPart.Color = Color3.new(red/255, green/255, blue/255)
-                v.Character.HumanoidRootPart.Material = "Neon"
-                v.Character.HumanoidRootPart.CanCollide = false
-            end
-        end
-    end)
-    
-    game:GetService("StarterGui"):SetCore("SendNotification",{
-        Title = "范围调整",
-        Text = "设置已应用",
-        Duration = 2.5;
-    })
+-- 最小化功能
+MinimizeBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    MinimizedFrame.Visible = true
+end)
+
+-- 最大化功能
+MaximizeBtn.MouseButton1Click:Connect(function()
+    MinimizedFrame.Visible = false
+    MainFrame.Visible = true
+end)
+
+-- 关闭功能
+CloseBtn.MouseButton1Click:Connect(function()
+    main:Destroy()
+end)
+
+MinimizedCloseBtn.MouseButton1Click:Connect(function()
+    main:Destroy()
 end)

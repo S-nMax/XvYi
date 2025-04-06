@@ -1,0 +1,455 @@
+-- 主通知
+game:GetService("StarterGui"):SetCore("SendNotification",{
+    Title = "绪一",
+    Text = "作者: 快看万叶 & WarriorRoberr",
+    Duration = 2.5;
+})
+
+-- 主UI
+local main = Instance.new("ScreenGui")
+main.Name = "MultiToolGUI"
+main.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+main.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- 主窗口
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 180)
+MainFrame.Position = UDim2.new(0.1, 0, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = main
+
+-- 圆角效果
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.Parent = MainFrame
+
+-- 标题栏
+local TitleBar = Instance.new("Frame")
+TitleBar.Size = UDim2.new(1, 0, 0, 30)
+TitleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+TitleBar.Parent = MainFrame
+
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Size = UDim2.new(0.6, 0, 1, 0)
+TitleLabel.Position = UDim2.new(0.05, 0, 0, 0)
+TitleLabel.Text = "绪一:选择"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.TextSize = 16
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Parent = TitleBar
+
+-- 标签页按钮
+local FlyTab = Instance.new("TextButton")
+FlyTab.Name = "FlyTab"
+FlyTab.Size = UDim2.new(0.3, 0, 0, 25)
+FlyTab.Position = UDim2.new(0.05, 0, 0.18, 0)
+FlyTab.Text = "飞行功能"
+FlyTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+FlyTab.Font = Enum.Font.SourceSansBold
+FlyTab.TextSize = 14
+FlyTab.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+FlyTab.Parent = MainFrame
+
+local HitboxTab = Instance.new("TextButton")
+HitboxTab.Name = "HitboxTab"
+HitboxTab.Size = UDim2.new(0.3, 0, 0, 25)
+HitboxTab.Position = UDim2.new(0.35, 0, 0.18, 0)
+HitboxTab.Text = "范围调整"
+HitboxTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+HitboxTab.Font = Enum.Font.SourceSansBold
+HitboxTab.TextSize = 14
+HitboxTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+HitboxTab.Parent = MainFrame
+
+-- 关闭按钮
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(0.9, 0, 0, 0)
+CloseBtn.Text = "×"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
+CloseBtn.Parent = TitleBar
+
+-- 飞行功能UI
+local FlyUI = Instance.new("Frame")
+FlyUI.Name = "FlyUI"
+FlyUI.Size = UDim2.new(1, 0, 0, 120)
+FlyUI.Position = UDim2.new(0, 0, 0.3, 0)
+FlyUI.BackgroundTransparency = 1
+FlyUI.Parent = MainFrame
+
+local up = Instance.new("TextButton")
+up.Size = UDim2.new(0, 60, 0, 30)
+up.Position = UDim2.new(0.05, 0, 0.1, 0)
+up.Text = "上升"
+up.TextColor3 = Color3.fromRGB(255, 255, 255)
+up.Font = Enum.Font.SourceSansBold
+up.TextSize = 16
+up.BackgroundColor3 = Color3.fromRGB(80, 180, 80)
+up.Parent = FlyUI
+
+local down = Instance.new("TextButton")
+down.Size = UDim2.new(0, 60, 0, 30)
+down.Position = UDim2.new(0.05, 0, 0.6, 0)
+down.Text = "下降"
+down.TextColor3 = Color3.fromRGB(255, 255, 255)
+down.Font = Enum.Font.SourceSansBold
+down.TextSize = 16
+down.BackgroundColor3 = Color3.fromRGB(180, 80, 80)
+down.Parent = FlyUI
+
+local plus = Instance.new("TextButton")
+plus.Size = UDim2.new(0, 60, 0, 30)
+plus.Position = UDim2.new(0.3, 0, 0.1, 0)
+plus.Text = "加速 +1"
+plus.TextColor3 = Color3.fromRGB(255, 255, 255)
+plus.Font = Enum.Font.SourceSansBold
+plus.TextSize = 14
+plus.BackgroundColor3 = Color3.fromRGB(70, 70, 120)
+plus.Parent = FlyUI
+
+local mine = Instance.new("TextButton")
+mine.Size = UDim2.new(0, 60, 0, 30)
+mine.Position = UDim2.new(0.3, 0, 0.6, 0)
+mine.Text = "减速 -1"
+mine.TextColor3 = Color3.fromRGB(255, 255, 255)
+mine.Font = Enum.Font.SourceSansBold
+mine.TextSize = 14
+mine.BackgroundColor3 = Color3.fromRGB(70, 70, 120)
+mine.Parent = FlyUI
+
+local speed = Instance.new("TextLabel")
+speed.Size = UDim2.new(0, 50, 0, 30)
+speed.Position = UDim2.new(0.55, 0, 0.1, 0)
+speed.Text = "1"
+speed.TextColor3 = Color3.fromRGB(255, 255, 255)
+speed.Font = Enum.Font.SourceSansBold
+speed.TextSize = 16
+speed.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+speed.Parent = FlyUI
+
+local onof = Instance.new("TextButton")
+onof.Size = UDim2.new(0, 80, 0, 30)
+onof.Position = UDim2.new(0.55, 0, 0.6, 0)
+onof.Text = "飞行:关闭"
+onof.TextColor3 = Color3.fromRGB(255, 255, 255)
+onof.Font = Enum.Font.SourceSansBold
+onof.TextSize = 16
+onof.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+onof.Parent = FlyUI
+
+-- 范围调整UI
+local HitboxUI = Instance.new("Frame")
+HitboxUI.Name = "HitboxUI"
+HitboxUI.Size = UDim2.new(1, 0, 0, 120)
+HitboxUI.Position = UDim2.new(0, 0, 0.3, 0)
+HitboxUI.BackgroundTransparency = 1
+HitboxUI.Visible = false
+HitboxUI.Parent = MainFrame
+
+local HitBox = Instance.new("TextBox")
+HitBox.Name = "HitBox"
+HitBox.Size = UDim2.new(0, 80, 0, 30)
+HitBox.Position = UDim2.new(0.05, 0, 0.2, 0)
+HitBox.Text = "5"
+HitBox.PlaceholderText = "Hitbox大小"
+HitBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+HitBox.Font = Enum.Font.SourceSansBold
+Hitbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+HitBox.TextSize = 14
+HitBox.Parent = HitboxUI
+
+local Red = Instance.new("TextBox")
+Red.Name = "Red"
+Red.Size = UDim2.new(0, 50, 0, 25)
+Red.Position = UDim2.new(0.4, 0, 0.2, 0)
+Red.Text = "255"
+Red.PlaceholderText = "R"
+Red.TextColor3 = Color3.fromRGB(0, 0, 0)
+Red.Font = Enum.Font.SourceSansBold
+Red.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+Red.TextSize = 14
+Red.Parent = HitboxUI
+
+local Green = Instance.new("TextBox")
+Green.Name = "Green"
+Green.Size = UDim2.new(0, 50, 0, 25)
+Green.Position = UDim2.new(0.6, 0, 0.2, 0)
+Green.Text = "0"
+Green.PlaceholderText = "G"
+Green.TextColor3 = Color3.fromRGB(0, 0, 0)
+Green.Font = Enum.Font.SourceSansBold
+Green.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+Green.TextSize = 14
+Green.Parent = HitboxUI
+
+local Blue = Instance.new("TextBox")
+Blue.Name = "Blue"
+Blue.Size = UDim2.new(0, 50, 0, 25)
+Blue.Position = UDim2.new(0.8, 0, 0.2, 0)
+Blue.Text = "0"
+Blue.PlaceholderText = "B"
+Blue.TextColor3 = Color3.fromRGB(0, 0, 0)
+Blue.Font = Enum.Font.SourceSansBold
+Blue.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+Blue.TextSize = 14
+Blue.Parent = HitboxUI
+
+local ApplyBtn = Instance.new("TextButton")
+ApplyBtn.Size = UDim2.new(0, 120, 0, 30)
+ApplyBtn.Position = UDim2.new(0.35, 0, 0.6, 0)
+ApplyBtn.Text = "应用设置"
+ApplyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ApplyBtn.Font = Enum.Font.SourceSansBold
+ApplyBtn.TextSize = 16
+ApplyBtn.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+ApplyBtn.Parent = HitboxUI
+
+-- 标签页切换功能
+FlyTab.MouseButton1Click:Connect(function()
+    FlyUI.Visible = true
+    HitboxUI.Visible = false
+    FlyTab.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+    HitboxTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+end)
+
+HitboxTab.MouseButton1Click:Connect(function()
+    FlyUI.Visible = false
+    HitboxUI.Visible = true
+    FlyTab.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+    HitboxTab.BackgroundColor3 = Color3.fromRGB(70, 120, 200)
+end)
+
+-- 关闭功能
+CloseBtn.MouseButton1Click:Connect(function()
+    main:Destroy()
+end)
+
+-- 飞行功能变量
+speeds = 1
+local speaker = game:GetService("Players").LocalPlayer
+local chr = game.Players.LocalPlayer.Character
+local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+nowe = false
+
+-- 飞行开关功能
+local function ToggleFlight()
+    if nowe == true then
+        nowe = false
+        onof.Text = "飞行:关闭"
+        
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,true)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,true)
+        speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
+    else 
+        nowe = true
+        onof.Text = "飞行:开启"
+        
+        for i = 1, speeds do
+            spawn(function()
+                local hb = game:GetService("RunService").Heartbeat    
+                tpwalking = true
+                local chr = game.Players.LocalPlayer.Character
+                local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+                while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+                    if hum.MoveDirection.Magnitude > 0 then
+                        chr:TranslateBy(hum.MoveDirection)
+                    end
+                end
+            end)
+        end
+        
+        game.Players.LocalPlayer.Character.Animate.Disabled = true
+        local Char = game.Players.LocalPlayer.Character
+        local Hum = Char:FindFirstChildOfClass("Humanoid") or Char:FindFirstChildOfClass("AnimationController")
+
+        for i,v in next, Hum:GetPlayingAnimationTracks() do
+            v:AdjustSpeed(0)
+        end
+        
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Running,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics,false)
+        speaker.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming,false)
+        speaker.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
+    end
+    
+    local plr = game.Players.LocalPlayer
+    local UpperTorso = plr.Character:FindFirstChild("HumanoidRootPart") or plr.Character:FindFirstChild("UpperTorso") or plr.Character:FindFirstChild("Torso")
+    local flying = true
+    local deb = true
+    local ctrl = {f = 0, b = 0, l = 0, r = 0}
+    local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+    local maxspeed = 50
+    local speed_val = 0
+
+    local bg = Instance.new("BodyGyro", UpperTorso)
+    bg.P = 9e4
+    bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+    bg.cframe = UpperTorso.CFrame
+    local bv = Instance.new("BodyVelocity", UpperTorso)
+    bv.velocity = Vector3.new(0,0.1,0)
+    bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+    if nowe == true then
+        plr.Character.Humanoid.PlatformStand = true
+    end
+    
+    while nowe == true or game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 do
+        wait()
+        if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
+            speed_val = speed_val+.5+(speed_val/maxspeed)
+            if speed_val > maxspeed then
+                speed_val = maxspeed
+            end
+        elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed_val ~= 0 then
+            speed_val = speed_val-1
+            if speed_val < 0 then
+                speed_val = 0
+            end
+        end
+        
+        if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+            bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed_val
+            lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
+        elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed_val ~= 0 then
+            bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed_val
+        else
+            bv.velocity = Vector3.new(0,0,0)
+        end
+
+        bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed_val/maxspeed),0,0)
+    end
+    
+    ctrl = {f = 0, b = 0, l = 0, r = 0}
+    lastctrl = {f = 0, b = 0, l = 0, r = 0}
+    speed_val = 0
+    bg:Destroy()
+    bv:Destroy()
+    plr.Character.Humanoid.PlatformStand = false
+    game.Players.LocalPlayer.Character.Animate.Disabled = false
+    tpwalking = false
+end
+
+-- 主飞行按钮点击事件
+onof.MouseButton1Down:Connect(ToggleFlight)
+
+-- 上升功能
+up.MouseButton1Down:connect(function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,2,0)
+end)
+
+-- 下降功能
+down.MouseButton1Down:connect(function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0,-2,0)
+end)
+
+-- 角色重生处理
+game:GetService("Players").LocalPlayer.CharacterAdded:Connect(function(char)
+    wait(0.7)
+    game.Players.LocalPlayer.Character.Humanoid.PlatformStand = false
+    game.Players.LocalPlayer.Character.Animate.Disabled = false
+end)
+
+-- 加速功能
+plus.MouseButton1Down:connect(function()
+    speeds = speeds + 1
+    speed.Text = speeds
+    if nowe == true then
+        tpwalking = false
+        for i = 1, speeds do
+            spawn(function()
+                local hb = game:GetService("RunService").Heartbeat    
+                tpwalking = true
+                local chr = game.Players.LocalPlayer.Character
+                local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+                while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+                    if hum.MoveDirection.Magnitude > 0 then
+                        chr:TranslateBy(hum.MoveDirection)
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+-- 减速功能
+mine.MouseButton1Down:connect(function()
+    if speeds == 1 then
+        speed.Text = '最低速度1'
+        wait(1)
+        speed.Text = speeds
+    else
+        speeds = speeds - 1
+        speed.Text = speeds
+        if nowe == true then
+            tpwalking = false
+            for i = 1, speeds do
+                spawn(function()
+                    local hb = game:GetService("RunService").Heartbeat    
+                    tpwalking = true
+                    local chr = game.Players.LocalPlayer.Character
+                    local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
+                    while tpwalking and hb:Wait() and chr and hum and hum.Parent do
+                        if hum.MoveDirection.Magnitude > 0 then
+                            chr:TranslateBy(hum.MoveDirection)
+                        end
+                    end
+                end)
+            end
+        end
+    end
+end)
+
+-- 范围调整功能
+ApplyBtn.MouseButton1Click:Connect(function()
+    local hitboxSize = tonumber(HitBox.Text) or 5
+    local red = tonumber(Red.Text) or 255
+    local green = tonumber(Green.Text) or 0
+    local blue = tonumber(Blue.Text) or 0
+    
+    game:GetService('RunService').RenderStepped:connect(function()
+        for i,v in next, game:GetService('Players'):GetPlayers() do
+            if v.Name ~= game:GetService('Players').LocalPlayer.Name and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                v.Character.HumanoidRootPart.Size = Vector3.new(hitboxSize, hitboxSize, hitboxSize)
+                v.Character.HumanoidRootPart.Transparency = 0.8
+                v.Character.HumanoidRootPart.Color = Color3.new(red/255, green/255, blue/255)
+                v.Character.HumanoidRootPart.Material = "Neon"
+                v.Character.HumanoidRootPart.CanCollide = false
+            end
+        end
+    end)
+    
+    game:GetService("StarterGui"):SetCore("SendNotification",{
+        Title = "范围调整",
+        Text = "设置已应用",
+        Duration = 2.5;
+    })
+end)
